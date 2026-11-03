@@ -1,7 +1,7 @@
 name = "head-complexity"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["HeadComplexity"]
+defaultTargets = ["HeadComplexity", "MechInterp", "Xorformer"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
@@ -16,3 +16,16 @@ rev = "v4.31.0"
 
 [[lean_lib]]
 name = "HeadComplexity"
+
+[[lean_lib]]
+name = "MechInterp"
+roots = ["MechInterp.All"]
+globs = ["MechInterp.+"]
+
+# XORFormer head complexity, built on MechInterp. Sources live in `xorformer/`.
+# It imports only Mathlib and MechInterp (enforced by `xorformer/Tools/check_policy.py`).
+[[lean_lib]]
+name = "Xorformer"
+srcDir = "xorformer"
+roots = ["Xorformer"]
+globs = ["Xorformer.*"]
