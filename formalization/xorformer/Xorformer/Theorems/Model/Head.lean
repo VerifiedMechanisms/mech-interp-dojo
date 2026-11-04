@@ -1,7 +1,7 @@
 import Xorformer.Definitions.Model.Head
-import MechInterp.Theorems.Architecture.Softmax
-import MechInterp.Theorems.Math.Normalizers
-import MechInterp.Theorems.Math.ConvexSeparation
+import MechInterp.Architecture.Softmax
+import MechInterp.Math.Normalizers
+import MechInterp.Math.ConvexSeparation
 
 set_option linter.style.header false
 

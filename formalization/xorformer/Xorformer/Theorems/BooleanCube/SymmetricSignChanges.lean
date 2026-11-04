@@ -141,7 +141,7 @@ lower bound
 is built in `Polynomial/SymmetricLowerBound.lean` + `Polynomial/UnivariateReduction.lean` (model →
 threshold degree → symmetrize → univariate root count) and its upper bound is the
 explicit `signChanges`-many-head softmax construction in `Atoms/SignPolynomial.lean` +
-`MechInterp.Theorems.Math.PartialFraction` + `Atoms/HammingAtom.lean`.
+`MechInterp.Math.PartialFraction` + `Atoms/HammingAtom.lean`.
 
 What this file contributes is the first nontrivial slice of that lower bound: a
 *width-1 spike* in `F` simultaneously forces `signChanges n F ≥ 2`

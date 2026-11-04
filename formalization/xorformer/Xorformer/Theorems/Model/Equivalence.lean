@@ -2,7 +2,7 @@ import Xorformer.Definitions.Model.Conversions
 import Xorformer.Definitions.Model.Computability
 import Xorformer.Theorems.Model.Literal
 import Xorformer.Theorems.Model.Head
-import MechInterp.Theorems.Algebra.Blocks
+import MechInterp.Algebra.Blocks
 
 set_option linter.style.header false
 

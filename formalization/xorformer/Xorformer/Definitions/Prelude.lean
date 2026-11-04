@@ -1,5 +1,4 @@
-import MechInterp.Definitions.Algebra.Spaces
-import MechInterp.Theorems.Algebra.Spaces
+import MechInterp.Algebra.Spaces
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Convex.Segment
 import Mathlib.Analysis.SpecialFunctions.Exp

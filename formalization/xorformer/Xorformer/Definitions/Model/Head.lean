@@ -1,6 +1,6 @@
 import Xorformer.Definitions.Prelude
 import Xorformer.Definitions.Model.Input
-import MechInterp.Definitions.Architecture.Softmax
+import MechInterp.Architecture.Softmax
 
 set_option linter.style.header false
 

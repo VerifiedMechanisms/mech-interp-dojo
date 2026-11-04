@@ -1,6 +1,6 @@
 import Xorformer.Definitions.Prelude
 import Xorformer.Definitions.Atoms.HammingAtom
-import MechInterp.Definitions.Math.Polynomial
+import MechInterp.Math.PartialFraction
 import Xorformer.Definitions.Atoms.SignPolynomial
 import Xorformer.Definitions.Polynomial.UnivariateReduction
 

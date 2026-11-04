@@ -1,8 +1,8 @@
 import Xorformer.Definitions.Atoms.WeightedAtom
 import Xorformer.Theorems.Atoms.HammingAtom
-import MechInterp.Theorems.Math.PartialFraction
-import MechInterp.Theorems.Architecture.Softmax
-import MechInterp.Theorems.Math.Normalizers
+import MechInterp.Math.PartialFraction
+import MechInterp.Architecture.Softmax
+import MechInterp.Math.Normalizers
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.Algebra.BigOperators.Fin
 

@@ -1,39 +1,44 @@
-import MechInterp.Definitions.Algebra.Affine
-import MechInterp.Definitions.Algebra.Blocks
-import MechInterp.Definitions.Algebra.Rank
-import MechInterp.Definitions.Algebra.Spaces
-import MechInterp.Definitions.Architecture.Attention
-import MechInterp.Definitions.Architecture.Embedding
-import MechInterp.Definitions.Architecture.Mask
-import MechInterp.Definitions.Architecture.MultiHead
-import MechInterp.Definitions.Architecture.Pattern
-import MechInterp.Definitions.Architecture.Score
-import MechInterp.Definitions.Architecture.Softmax
-import MechInterp.Definitions.Interpretability.Data
-import MechInterp.Definitions.Math.ConvexSeparation
-import MechInterp.Definitions.Math.Polynomial
-import MechInterp.Theorems.Algebra.Affine
-import MechInterp.Theorems.Algebra.Blocks
-import MechInterp.Theorems.Algebra.Rank
-import MechInterp.Theorems.Algebra.Spaces
-import MechInterp.Theorems.Architecture.Attention
-import MechInterp.Theorems.Architecture.Embedding
-import MechInterp.Theorems.Architecture.Mask
-import MechInterp.Theorems.Architecture.Pattern
-import MechInterp.Theorems.Architecture.Score
-import MechInterp.Theorems.Architecture.Softmax
-import MechInterp.Theorems.Interpretability.Data
-import MechInterp.Theorems.Math.ConvexSeparation
-import MechInterp.Theorems.Math.Normalizers
-import MechInterp.Theorems.Math.PartialFraction
-import MechInterp.Theorems.Math.Square
-
-set_option linter.style.header false
+/-
+Copyright (c) 2026 Malhar A. Patel. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Malhar A. Patel
+-/
+-- Supporting mathematics
+import MechInterp.Math.BoolSquare
+import MechInterp.Math.ConvexSeparation
+import MechInterp.Math.Normalizers
+import MechInterp.Math.PartialFraction
+-- Coordinate spaces and linear algebra
+import MechInterp.Algebra.Affine
+import MechInterp.Algebra.Blocks
+import MechInterp.Algebra.Rank
+import MechInterp.Algebra.Spaces
+-- Finite probability distributions
+import MechInterp.Data.FinDist
+-- Transformer architecture
+import MechInterp.Architecture.Attention
+import MechInterp.Architecture.Embedding
+import MechInterp.Architecture.Mask
+import MechInterp.Architecture.MultiHead
+import MechInterp.Architecture.Pattern
+import MechInterp.Architecture.Score
+import MechInterp.Architecture.Softmax
 
 /-!
 # MechInterp
 
-Umbrella module: imports every MechInterp module, so `lake build MechInterp` (the library root
-named in `lakefile.toml`) builds the whole library. Definitions and theorems are documented in
-`MechInterp/README.md`.
+The umbrella module of the library: `import MechInterp.All` brings in every module. The library
+root named in `lakefile.toml` is this module, and `MechInterp/README.md` explains the mathematics
+and the Lean declarations in dependency order.
+
+Each topic lives in a single module that holds its definitions together with the theorems about
+them:
+
+* `MechInterp.Math`: convex separation, positive normalizers, the Boolean square, and partial
+  fractions.
+* `MechInterp.Algebra`: coordinate spaces and streams, affine maps, block decompositions, and
+  rank.
+* `MechInterp.Data`: finite probability distributions over datasets.
+* `MechInterp.Architecture`: embeddings, masks, score rules, attention patterns, softmax and
+  hardmax, attention heads, and multi-head attention.
 -/

@@ -28,9 +28,9 @@ This README explains, in dependency order, **the mathematics that is formalized*
 
 ## 1. Status and how to build
 
-The library has 29 Lean modules (about 2,500 lines). **All 29 build** without errors, `sorry`, or project axioms. Every theorem described below is machine-checked.
+The library has 16 topic modules plus the umbrella module `All.lean` (about 3,000 lines). **All of them build** without errors, warnings, `sorry`, or project axioms. Every theorem described below is machine-checked.
 
-The library root is the umbrella module `MechInterp/All.lean` (`MechInterp.All`), which imports all 29 modules. Build it from `formalization/`:
+The library root is the umbrella module `MechInterp/All.lean` (`MechInterp.All`), which imports every topic module. Build it from `formalization/`:
 
 ```bash
 cd formalization
@@ -44,11 +44,20 @@ The lakefile's `globs = ["MechInterp.+"]` builds every module under `MechInterp/
 
 ## 2. Conventions
 
-### 2.1 Definitions and theorems are separated
+### 2.1 One module per topic
 
-Every topic has a definitions module under `Definitions/` and, usually, a theorems module under `Theorems/` with the same path. Definition modules contain only `def`, `abbrev`, `structure`, and data-carrying `instance` declarations. A structure may carry proof fields that certify it is well formed; for example, an attention pattern carries the proof that its rows sum to one. Theorem modules contain only `theorem` declarations.
+Each topic is a single module that holds its definitions together with the theorems about them. Within a module, a definition is usually followed directly by its basic lemmas, and the main results come after. The modules are grouped into four directories:
 
-A definitions module may import the theorems of a strictly earlier topic when it needs a certificate. For example, `Definitions/Architecture/Softmax.lean` imports `Theorems/Math/Normalizers.lean` to prove that a softmax normalizer is positive.
+| Directory | Contents |
+| --- | --- |
+| `Math/` | model-independent mathematics: convex separation, positive normalizers, the Boolean square, partial fractions |
+| `Algebra/` | coordinate spaces and streams, affine maps, block decompositions, rank |
+| `Data/` | finite probability distributions over datasets |
+| `Architecture/` | embeddings, masks, score rules, attention patterns, softmax and hardmax, attention heads, multi-head attention |
+
+Every module starts with a copyright header and a module docstring that lists its main definitions and main results, and every definition, structure field, and theorem has a docstring. Long proofs carry comments that mark their steps.
+
+A structure may carry proof fields that certify it is well formed. For example, an attention pattern carries the proof that its rows sum to one, and the softmax pattern rule uses the theorems of `Math/Normalizers.lean` to prove that its normalizers are positive.
 
 ### 2.2 Namespace and notation
 
@@ -73,7 +82,7 @@ Positions, tokens, heads, and coordinates are indexed by arbitrary finite types 
 
 ## 3. Vector spaces, coordinates, and streams
 
-**Modules:** `Definitions/Algebra/Spaces.lean`, `Theorems/Algebra/Spaces.lean`
+**Module:** [`Algebra/Spaces.lean`](Algebra/Spaces.lean)
 
 ### 3.1 Definitions
 
@@ -139,7 +148,7 @@ The last theorem follows from the two before it: $\langle E_e v, E_e w\rangle = 
 
 ## 4. Affine maps
 
-**Modules:** `Definitions/Algebra/Affine.lean`, `Theorems/Algebra/Affine.lean`
+**Module:** [`Algebra/Affine.lean`](Algebra/Affine.lean)
 
 ### 4.1 Definitions
 
@@ -168,7 +177,7 @@ The decomposition comes from the defining property of an affine map, $f(x + 0) =
 
 ## 5. Block decompositions
 
-**Modules:** `Definitions/Algebra/Blocks.lean`, `Theorems/Algebra/Blocks.lean`
+**Module:** [`Algebra/Blocks.lean`](Algebra/Blocks.lean)
 
 Concatenated spaces occur everywhere in transformers: multi-head outputs are concatenated, and residual streams are split into subspaces. Here a concatenated space is indexed by a sum, product, or sigma type. A block map is then restriction or extension along the injective index map that picks out the block.
 
@@ -225,7 +234,7 @@ These are `proj_inj`, `proj_inj_of_ne`, `inner_inj_left`, `inner_inj`, `proj_con
 
 ## 6. Rank, low-rank factorization, and Frobenius norms
 
-**Modules:** `Definitions/Algebra/Rank.lean`, `Theorems/Algebra/Rank.lean`
+**Module:** [`Algebra/Rank.lean`](Algebra/Rank.lean)
 
 ### 6.1 Motivation
 
@@ -294,7 +303,7 @@ These modules hold model-independent facts that the attention theory and the XOR
 
 ### 7.1 Linear-threshold separability and convex hulls
 
-**Modules:** `Definitions/Math/ConvexSeparation.lean`, `Theorems/Math/ConvexSeparation.lean`
+**Module:** [`Math/ConvexSeparation.lean`](Math/ConvexSeparation.lean)
 
 **Definition.** In a real inner product space $V$, sets $S^{+}$ and $S^{-}$ are **linear-threshold separable** if
 
@@ -317,14 +326,14 @@ The inequality is strict on the positive side and weak on the negative side, mat
 
 ### 7.2 Positive normalizers
 
-**Module:** `Theorems/Math/Normalizers.lean`
+**Module:** [`Math/Normalizers.lean`](Math/Normalizers.lean)
 
 - A finite sum of strictly positive reals over a nonempty index set is strictly positive (`positiveNormalizer_pos`, `positiveNormalizer_pos_of_nonempty`). This certifies that softmax denominators are positive.
 - A two-term weighted average can be rewritten as $\frac{a}{a+b}u + \frac{b}{a+b}v = (a+b)^{-1}(a u + b v)$ (`twoTermWeightedAverage_eq_inv_smul_sum`).
 
 ### 7.3 Functions on the Boolean square
 
-**Module:** `Theorems/Math/Square.lean`
+**Module:** [`Math/BoolSquare.lean`](Math/BoolSquare.lean)
 
 For $f : \lbrace 0,1\rbrace^2 \to A$ with $A$ an abelian group (`boolSquare_antipode_iff_additive_split`):
 
@@ -338,7 +347,7 @@ f(0,0) + f(1,1) = f(0,1) + f(1,0)
 
 ### 7.4 Real partial fractions
 
-**Modules:** `Definitions/Math/Polynomial.lean`, `Theorems/Math/PartialFraction.lean`
+**Module:** [`Math/PartialFraction.lean`](Math/PartialFraction.lean)
 
 **Definitions.** For shifts $a_1, \dots, a_K \in \mathbb{R}$:
 
@@ -369,7 +378,7 @@ Dividing by $Q(k) \neq 0$ gives the partial-fraction decomposition $P(k)/Q(k) = 
 
 ## 8. Finite probability distributions
 
-**Modules:** `Definitions/Interpretability/Data.lean`, `Theorems/Interpretability/Data.lean`
+**Module:** [`Data/FinDist.lean`](Data/FinDist.lean)
 
 Interpretability measurements average over prompt datasets. This includes the mean activation used in mean ablation and the average effect of a patch. The library models such data with finitely supported distributions whose weights are real numbers. Mathlib's `PMF` uses extended nonnegative reals instead, which make expectations of vector-valued functions awkward.
 
@@ -426,7 +435,7 @@ For real-valued functions:
 
 ## 9. Token encoders and embeddings
 
-**Modules:** `Definitions/Architecture/Embedding.lean`, `Theorems/Architecture/Embedding.lean`
+**Module:** [`Architecture/Embedding.lean`](Architecture/Embedding.lean)
 
 ### 9.1 Definitions
 
@@ -468,7 +477,7 @@ The accessors are `tokenVec` ($e_t$), `posVec` ($p_i$), `embed tok` (the stream 
 
 ## 10. Attention masks
 
-**Modules:** `Definitions/Architecture/Mask.lean`, `Theorems/Architecture/Mask.lean`
+**Module:** [`Architecture/Mask.lean`](Architecture/Mask.lean)
 
 ### 10.1 Definitions
 
@@ -511,7 +520,7 @@ Causality always refers to an **explicit order** $\mathrm{ord} : P \to \mathbb{N
 
 ## 11. Score rules: dot products, ALiBi, and RoPE
 
-**Modules:** `Definitions/Architecture/Score.lean`, `Theorems/Architecture/Score.lean`
+**Module:** [`Architecture/Score.lean`](Architecture/Score.lean)
 
 ### 11.1 Definitions
 
@@ -564,7 +573,7 @@ Its isometry certificate is $\cos^2 + \sin^2 = 1$ in each plane. RoPE rotates th
 
 ## 12. Attention patterns and value mixing
 
-**Modules:** `Definitions/Architecture/Pattern.lean`, `Theorems/Architecture/Pattern.lean`
+**Module:** [`Architecture/Pattern.lean`](Architecture/Pattern.lean)
 
 ### 12.1 Definitions
 
@@ -631,7 +640,7 @@ The convex-hull theorem says an attention head can only average the values it is
 
 ## 13. Softmax, hardmax, and raw weight rules
 
-**Modules:** `Definitions/Architecture/Softmax.lean`, `Theorems/Architecture/Softmax.lean`
+**Module:** [`Architecture/Softmax.lean`](Architecture/Softmax.lean)
 
 ### 13.1 Definitions
 
@@ -710,7 +719,7 @@ A_{ij} = \begin{cases} e^{\beta s_{ij}}/Z_i & M(i,j),\\ 0 & \text{otherwise.}\en
 
 ## 14. Attention heads
 
-**Modules:** `Definitions/Architecture/Attention.lean`, `Theorems/Architecture/Attention.lean`
+**Module:** [`Architecture/Attention.lean`](Architecture/Attention.lean)
 
 ### 14.1 Definitions
 
@@ -787,7 +796,7 @@ Proof ideas:
 
 ## 15. Multi-head attention
 
-**Module:** `Definitions/Architecture/MultiHead.lean` (there is no theorems module yet)
+**Module:** [`Architecture/MultiHead.lean`](Architecture/MultiHead.lean) (definitions only; there are no theorems about multi-head layers yet)
 
 A multi-head layer has a finite head type and, for each head $h$, a query/key width $d_K(h)$ and a value width $d_V(h)$. Heads may have different widths. Each head comes with its own score rule; the mask, the pattern rule, and an output bias $b_O$ are shared:
 
@@ -851,27 +860,28 @@ The library does not yet formalize the following:
 - **Expressivity:** model classes, decision rules, realization, minimal resources, and simulation.
 - **Claims, worked examples, and tooling:** formal interpretability claims, worked examples, and validation scripts.
 
-Closest to finishing: a theorems module for `MultiHead`.
+Closest to finishing: theorems about `MultiHead`, such as $W_O^{\mathrm{cat}} z^{\mathrm{cat}}_i = \sum_h W_O^{(h)} z^{(h)}_i$.
 
 ## 17. Module index
 
-Modules in dependency order. Each definitions module imports only earlier modules.
+Modules in dependency order. The last column lists the MechInterp modules each one imports; everything else comes from Mathlib.
 
-| # | Topic | Definitions | Theorems | Builds |
-| --- | --- | --- | --- | --- |
-| 1 | Positive normalizers | — | `Theorems/Math/Normalizers` | yes |
-| 2 | Convex separation | `Definitions/Math/ConvexSeparation` | `Theorems/Math/ConvexSeparation` | yes |
-| 3 | Partial fractions | `Definitions/Math/Polynomial` | `Theorems/Math/PartialFraction` | yes |
-| 4 | Boolean square | — | `Theorems/Math/Square` | yes |
-| 5 | Spaces and streams | `Definitions/Algebra/Spaces` | `Theorems/Algebra/Spaces` | yes |
-| 6 | Affine maps | `Definitions/Algebra/Affine` | `Theorems/Algebra/Affine` | yes |
-| 7 | Block maps | `Definitions/Algebra/Blocks` | `Theorems/Algebra/Blocks` | yes |
-| 8 | Rank and factorization | `Definitions/Algebra/Rank` | `Theorems/Algebra/Rank` | yes |
-| 9 | Finite distributions | `Definitions/Interpretability/Data` | `Theorems/Interpretability/Data` | yes |
-| 10 | Embeddings | `Definitions/Architecture/Embedding` | `Theorems/Architecture/Embedding` | yes |
-| 11 | Masks | `Definitions/Architecture/Mask` | `Theorems/Architecture/Mask` | yes |
-| 12 | Score rules | `Definitions/Architecture/Score` | `Theorems/Architecture/Score` | yes |
-| 13 | Patterns | `Definitions/Architecture/Pattern` | `Theorems/Architecture/Pattern` | yes |
-| 14 | Softmax and hardmax | `Definitions/Architecture/Softmax` | `Theorems/Architecture/Softmax` | yes |
-| 15 | Attention heads | `Definitions/Architecture/Attention` | `Theorems/Architecture/Attention` | yes |
-| 16 | Multi-head attention | `Definitions/Architecture/MultiHead` | — | yes |
+| # | Topic | Module | Imports from MechInterp |
+| --- | --- | --- | --- |
+| 1 | Positive normalizers | [`Math/Normalizers.lean`](Math/Normalizers.lean) | — |
+| 2 | Convex separation | [`Math/ConvexSeparation.lean`](Math/ConvexSeparation.lean) | — |
+| 3 | Partial fractions | [`Math/PartialFraction.lean`](Math/PartialFraction.lean) | — |
+| 4 | Boolean square | [`Math/BoolSquare.lean`](Math/BoolSquare.lean) | — |
+| 5 | Spaces and streams | [`Algebra/Spaces.lean`](Algebra/Spaces.lean) | — |
+| 6 | Affine maps | [`Algebra/Affine.lean`](Algebra/Affine.lean) | — |
+| 7 | Block maps | [`Algebra/Blocks.lean`](Algebra/Blocks.lean) | `Algebra/Spaces` |
+| 8 | Rank and factorization | [`Algebra/Rank.lean`](Algebra/Rank.lean) | `Algebra/Spaces` |
+| 9 | Finite distributions | [`Data/FinDist.lean`](Data/FinDist.lean) | — |
+| 10 | Embeddings | [`Architecture/Embedding.lean`](Architecture/Embedding.lean) | `Algebra/Spaces` |
+| 11 | Masks | [`Architecture/Mask.lean`](Architecture/Mask.lean) | — |
+| 12 | Score rules | [`Architecture/Score.lean`](Architecture/Score.lean) | `Algebra/Spaces` |
+| 13 | Patterns | [`Architecture/Pattern.lean`](Architecture/Pattern.lean) | `Architecture/Mask` |
+| 14 | Softmax and hardmax | [`Architecture/Softmax.lean`](Architecture/Softmax.lean) | `Architecture/Pattern`, `Math/Normalizers` |
+| 15 | Attention heads | [`Architecture/Attention.lean`](Architecture/Attention.lean) | `Algebra/Affine`, `Architecture/Score`, `Architecture/Softmax` |
+| 16 | Multi-head attention | [`Architecture/MultiHead.lean`](Architecture/MultiHead.lean) | `Algebra/Blocks`, `Architecture/Attention` |
+| — | Umbrella | [`All.lean`](All.lean) | every module above |

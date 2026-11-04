@@ -1,4 +1,4 @@
-import MechInterp.Theorems.Math.Square
+import MechInterp.Math.BoolSquare
 import Xorformer.Theorems.Model.Head
 
 set_option linter.style.header false
@@ -13,7 +13,7 @@ $$ N(a,b) = A(a) + B(b) + C, \qquad D(a,b) = \alpha(a) + \beta(b) + \gamma. $$
 
 For a two-valued domain `Bool × Bool` this additive form is *equivalent* to the
 antipode (balance) identity `N(0,0)+N(1,1) = N(0,1)+N(1,0)`. The Bool-square
-algebra is proved in `MechInterp.Theorems.Math.Square`; this file specializes it to the
+algebra is proved in `MechInterp.Math.BoolSquare`; this file specializes it to the
 numerator and denominator antipode identities established for `Head` in
 `Model/Head.lean`.
 -/

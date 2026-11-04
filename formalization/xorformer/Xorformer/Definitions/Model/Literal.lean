@@ -1,7 +1,7 @@
 import Xorformer.Definitions.Model.Input
-import MechInterp.Definitions.Architecture.Embedding
-import MechInterp.Definitions.Architecture.MultiHead
-import MechInterp.Theorems.Architecture.Mask
+import MechInterp.Architecture.Embedding
+import MechInterp.Architecture.MultiHead
+import MechInterp.Architecture.Mask
 
 set_option linter.style.header false
 

@@ -1,6 +1,6 @@
 import Xorformer.Theorems.Model.Literal
 import Xorformer.Theorems.Model.Head
-import MechInterp.Theorems.Math.Square
+import MechInterp.Math.BoolSquare
 
 set_option linter.style.header false
 

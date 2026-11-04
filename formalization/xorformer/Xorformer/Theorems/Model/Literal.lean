@@ -1,9 +1,9 @@
 import Xorformer.Definitions.Model.Literal
-import MechInterp.Theorems.Architecture.Attention
-import MechInterp.Theorems.Architecture.Softmax
-import MechInterp.Theorems.Architecture.Score
-import MechInterp.Theorems.Architecture.Embedding
-import MechInterp.Theorems.Architecture.Mask
+import MechInterp.Architecture.Attention
+import MechInterp.Architecture.Softmax
+import MechInterp.Architecture.Score
+import MechInterp.Architecture.Embedding
+import MechInterp.Architecture.Mask
 
 set_option linter.style.header false
 

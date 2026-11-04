@@ -1,5 +1,5 @@
 import Xorformer.Theorems.Atoms.HammingAtom
-import MechInterp.Theorems.Math.PartialFraction
+import MechInterp.Math.PartialFraction
 import Xorformer.Theorems.Atoms.SignPolynomial
 import Xorformer.Theorems.Polynomial.UnivariateReduction
 

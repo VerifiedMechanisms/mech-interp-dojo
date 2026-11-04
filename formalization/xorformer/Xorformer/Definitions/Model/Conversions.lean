@@ -1,6 +1,6 @@
 import Xorformer.Definitions.Model.Literal
 import Xorformer.Definitions.Model.Head
-import MechInterp.Definitions.Algebra.Blocks
+import MechInterp.Algebra.Blocks
 
 set_option linter.style.header false
 
