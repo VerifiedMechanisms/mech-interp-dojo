@@ -4,7 +4,7 @@ keywords = ["math"]
 defaultTargets = ["MechInterp"]
 
 [leanOptions]
-pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+pp.unicode.fun = true                 # pretty-prints `fun a ↦ b`
 relaxedAutoImplicit = false
 weak.linter.mathlibStandardSet = true
 maxSynthPendingDepth = 3
@@ -18,3 +18,8 @@ rev = "v4.31.0"
 name = "MechInterp"
 roots = ["MechInterp.All"]
 globs = ["MechInterp.+"]
+
+[[lean_lib]]
+name = "Xorformer"
+roots = ["Xorformer.Xorformer"]
+globs = ["Xorformer.+"]
